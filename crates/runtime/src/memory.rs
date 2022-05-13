@@ -520,6 +520,7 @@ impl Memory {
         let maximum = self.maximum_byte_size();
         // Store limiter gets first chance to reject memory_growing.
         if !store.memory_growing(old_byte_size, new_byte_size, maximum)? {
+            store.memory_grow_failed(&format_err!("static memory size exceeded"));
             return Ok(None);
         }
 
